@@ -55,6 +55,7 @@ Content-type: text/html\n
   <meta charset="UTF-8">
   <title>@{[$mode eq 'edit'?"編集：$pc{itemName}":'新規作成']} - $set::title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" media="all" href="${main::core_dir}/skin/_common/favicon.ico">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/base.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/sheet.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/sw2/css/item.css?${main::ver}">
@@ -81,7 +82,7 @@ if($mode_make){
 }
 print <<"HTML";
       <input type="hidden" name="mode" value="@{[ $mode eq 'edit' ? 'save' : 'make' ]}">
-            
+
       <div id="header-menu">
         <h2><span></span></h2>
         <ul>
@@ -102,7 +103,7 @@ print <<"HTML";
       </div>
 
       <aside class="message">$message</aside>
-      
+
       <section id="section-common">
 HTML
 if($set::user_reqd){
@@ -170,7 +171,7 @@ HTML
           <dd>@{[input('author')]}
         </dl>
       </div>
-      
+
       <div class="box input-data in-toc" data-content-title="基本データ">
       <label>@{[ input 'magic', 'checkbox' ]}<span>魔法のアイテム</span></label>
       <!-- <label>@{[ input 'school', 'checkbox' ]}　流派装備</label> -->
@@ -242,9 +243,9 @@ HTML
       <textarea name="description">$pc{description}</textarea>
     </div>
     </section>
-      
+
       @{[ colorCostomForm ]}
-    
+
       @{[ input 'birthTime','hidden' ]}
       <input type="hidden" name="id" value="$::in{id}">
     </form>

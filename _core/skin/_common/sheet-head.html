@@ -18,6 +18,7 @@
       <link rel="ytchat-palette-exporting-point" type="text/plain" href="./?id=<TMPL_VAR id>&mode=palette">
     </TMPL_IF>
   </TMPL_UNLESS>
+  <link rel="icon" href="<TMPL_VAR coreDir>/skin/_common/favicon.ico">
   <link rel="stylesheet" data-dl href="<TMPL_VAR coreDir>/skin/_common/css/base.css?<TMPL_VAR ver>">
   <link rel="stylesheet" data-dl href="<TMPL_VAR coreDir>/skin/_common/css/sheet.css?<TMPL_VAR ver>">
   <link rel="stylesheet" data-dl href="<TMPL_VAR coreDir>/skin/<TMPL_VAR gameDir>/css/<TMPL_VAR sheetType>.css?<TMPL_VAR ver>">
@@ -55,6 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
       --box-base-bg-color-l: <TMPL_VAR colorBaseBgL>%;
       --box-base-bg-color-d: <TMPL_VAR colorBaseBgD>%;
     }
+
+
+
+
+
+
+
   </style>
   <TMPL_INCLUDE NAME="skin-add/sheet-head.html">
   <script data-dl src="<TMPL_VAR coreDir>/skin/_common/js/common.js?<TMPL_VAR ver>"></script>

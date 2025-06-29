@@ -47,14 +47,14 @@ sub outputChatPalette {
     my ($key, $value) = split(/<>/, $_, 2);
     $pc{$key} = $value;
   }
-  
+
   if($pc{forbidden}){
     my $LOGIN_ID = check;
     if($::in{log}){
       ($pc{protect}, $pc{forbidden}) = getProtectType("${set::char_dir}${file}/data.cgi");
     }
     unless(
-      ($pc{protect} eq 'none') || 
+      ($pc{protect} eq 'none') ||
       ($author && ($author eq $LOGIN_ID || $set::masterid eq $LOGIN_ID))
     ){
       print "Content-type: text/plain; charset=UTF-8\n\n";
@@ -62,7 +62,7 @@ sub outputChatPalette {
       exit;
     }
   }
-  
+
   if($pc{paletteRemoveTags}){
     $_ = removeTags(unescapeTags($_) =~ s/<br>/\n/gr) foreach values %pc;
   }
@@ -75,7 +75,7 @@ sub outputChatPalette {
   $pc{ver} =~ s/^([0-9]+)\.([0-9]+)\.([0-9]+)$/$1.$2$3/;
   if($pc{ver} < 1.11001){ $pc{paletteUseBuff} = 1; }
 
-  my $preset = $pc{paletteUseVar} ? palettePreset($tool,$type) :  palettePresetSimple($tool,$type) ;
+  my $preset = $pc{paletteUseVar} ? palettePresetSimple($tool,$type) :  palettePreset($tool,$type) ;
 
   $preset = deletePalettePresetBuff($preset) if !$pc{paletteUseBuff};
   if(!$tool){ $preset = swapWordAndCommand($preset); }
@@ -87,7 +87,7 @@ sub outputChatPalette {
   }
 
   my $properties;
-  $properties .= $_."\n" foreach( $pc{chatPalettePropertiesAll} ? paletteProperties($tool,$type) : filterByUsedOnly($pc{chatPalette},$tool,$type) );
+  $properties .= $_."\n" foreach( $pc{chatPalettePropertiesAll} ? filterByUsedOnly($pc{chatPalette},$tool,$type) : paletteProperties($tool,$type) );
 
   $properties =~ s/\n+$//g;
 
@@ -175,7 +175,7 @@ sub outputChatPaletteTemplate {
     $_ = unescapeTagsPalette($_) foreach values %pc;
   }
   my %json;
-  $json{preset} = $pc{paletteUseVar} ? palettePreset($tool,$type) :  palettePresetSimple($tool,$type);
+  $json{preset} = $pc{paletteUseVar} ? palettePresetSimple($tool,$type) :  palettePreset($tool,$type);
   $json{preset} = deletePalettePresetBuff($json{preset}) if !$pc{paletteUseBuff};
   if(!$pc{paletteTool}){ $json{preset} = swapWordAndCommand($json{preset}); }
   $json{properties} .= "$_\n" foreach( paletteProperties($tool,$type) );
@@ -203,7 +203,7 @@ sub deletePalettePresetBuff {
   $text =~ s/\+0//g;
   $text =~ s/\+\(\)//g;
   $text =~ s/^### ■バフ・デバフ\n//g;
-  
+
   return $text;
 }
 
@@ -247,12 +247,12 @@ sub unescapeTagsPalette {
   if($set::game eq 'sw2'){
     $text =~ s/\[(魔|刃|打)\]/&#91;$1&#93;/;
   }
-  
+
   $text =~ s/\[\[(.+?)&gt;((?:(?!<br>)[^"])+?)\]\]/$1/gi; # リンク削除
   $text =~ s/\[(.+?)#([a-zA-Z0-9\-]+?)\]/$1/gi; # シート内リンク削除
-  
+
   $text =~ s/&#91;(.)&#93;/[$1]/g;
-  
+
   $text =~ s/\n/<br>/gi;
   return $text;
 }

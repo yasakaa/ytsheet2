@@ -49,7 +49,7 @@ if($mode eq 'edit' || ($mode eq 'convert' && $pc{ver})){
 }
 elsif($mode eq 'blanksheet'){
   $pc{group} = $set::group_default;
-  
+
   $pc{history0Exp}   = $set::make_exp;
   $pc{history0Honor} = $set::make_honor;
   $pc{history0Money} = $set::make_money;
@@ -57,7 +57,7 @@ elsif($mode eq 'blanksheet'){
 
   $pc{money}   = '自動';
   $pc{deposit} = '自動';
-  
+
   if($::in{stt}){
     ($pc{sttBaseTec}, $pc{sttBasePhy}, $pc{sttBaseSpi}, $pc{sttBaseA}, $pc{sttBaseB}, $pc{sttBaseC}, $pc{sttBaseD}, $pc{sttBaseE}, $pc{sttBaseF}) = split(/_/, $::in{stt});
     $pc{race} = decode('utf8', $::in{race});
@@ -76,11 +76,11 @@ elsif($mode eq 'blanksheet'){
       $pc{partCore} = 1;
     }
   }
-  
+
   $pc{defTotal1CheckArmour1} = $pc{defTotal1CheckArmour2} = $pc{defTotal1CheckArmour3} = 1;
   $pc{armour2Category} = '盾';
   $pc{armour3Category} = 'その他';
-  
+
   $pc{paletteUseBuff} = 1;
 
   %pc = applyCustomizedInitialValues(\%pc, '');
@@ -131,6 +131,7 @@ Content-type: text/html\n
   <meta charset="UTF-8">
   <title>@{[$mode eq 'edit'?"編集：$titlebarname" : '新規作成']} - $set::title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" media="all" href="${main::core_dir}/skin/_common/favicon.ico">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/base.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/sheet.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/sw2/css/chara.css?${main::ver}">
@@ -165,7 +166,7 @@ if($mode_make){
 }
 print <<"HTML";
       <input type="hidden" name="mode" value="@{[ $mode eq 'edit' ? 'save' : 'make' ]}">
-      
+
       <div id="header-menu">
         <h2><span></span></h2>
         <ul>
@@ -187,7 +188,7 @@ print <<"HTML";
       </div>
 
       <aside class="message">$message</aside>
-      
+
       <section id="section-common">
 HTML
 if($set::user_reqd){
@@ -253,7 +254,7 @@ print <<"HTML";
           <dt>タグ<dd>@{[ input 'tags','','','' ]}
         </dl>
       </div>
-      
+
       <div class="box in-toc" id="name-form" data-content-title="キャラクター名・プレイヤー名">
         <div>
           <dl id="character-name">
@@ -361,42 +362,42 @@ print <<"HTML";
           <dl class="box" id="stt-base-tec"><dt>技<dd>@{[input('sttBaseTec','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-phy"><dt>体<dd>@{[input('sttBasePhy','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-spi"><dt>心<dd>@{[input('sttBaseSpi','number','calcStt')]}</dl>
-          
+
           <dl class="box" id="stt-base-A"><dt>Ａ<dd>@{[input('sttBaseA','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-B"><dt>Ｂ<dd>@{[input('sttBaseB','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-C"><dt>Ｃ<dd>@{[input('sttBaseC','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-D"><dt>Ｄ<dd>@{[input('sttBaseD','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-E"><dt>Ｅ<dd>@{[input('sttBaseE','number','calcStt')]}</dl>
           <dl class="box" id="stt-base-F"><dt>Ｆ<dd>@{[input('sttBaseF','number','calcStt')]}</dl>
-          
+
           <dl class="box" id="stt-grow-A"><dt>成長<dd id="stt-grow-A-value">$pc{sttGrowA}</dl>
           <dl class="box" id="stt-grow-B"><dt>成長<dd id="stt-grow-B-value">$pc{sttGrowB}</dl>
           <dl class="box" id="stt-grow-C"><dt>成長<dd id="stt-grow-C-value">$pc{sttGrowC}</dl>
           <dl class="box" id="stt-grow-D"><dt>成長<dd id="stt-grow-D-value">$pc{sttGrowD}</dl>
           <dl class="box" id="stt-grow-E"><dt>成長<dd id="stt-grow-E-value">$pc{sttGrowE}</dl>
           <dl class="box" id="stt-grow-F"><dt>成長<dd id="stt-grow-F-value">$pc{sttGrowF}</dl>
-          
+
           <dl class="box" id="stt-dex"><dt>器用度<dd id="stt-dex-value">$pc{sttDex}</dl>
           <dl class="box" id="stt-agi"><dt>敏捷度<dd id="stt-agi-value">$pc{sttAgi}</dl>
           <dl class="box" id="stt-str"><dt>筋力  <dd id="stt-str-value">$pc{sttStr}</dl>
           <dl class="box" id="stt-vit"><dt>生命力<dd id="stt-vit-value">$pc{sttVit}</dl>
           <dl class="box" id="stt-int"><dt>知力  <dd id="stt-int-value">$pc{sttInt}</dl>
           <dl class="box" id="stt-mnd"><dt>精神力<dd id="stt-mnd-value">$pc{sttMnd}</dl>
-          
+
           <dl class="box" id="stt-add-A"><dt>増強<dd><span id="stt-equip-A-value"></span>@{[input('sttAddA','number','calcStt')]}</dl>
           <dl class="box" id="stt-add-B"><dt>増強<dd><span id="stt-equip-B-value"></span>@{[input('sttAddB','number','calcStt')]}</dl>
           <dl class="box" id="stt-add-C"><dt>増強<dd><span id="stt-equip-C-value"></span>@{[input('sttAddC','number','calcStt')]}</dl>
           <dl class="box" id="stt-add-D"><dt>増強<dd><span id="stt-equip-D-value"></span>@{[input('sttAddD','number','calcStt')]}</dl>
           <dl class="box" id="stt-add-E"><dt>増強<dd><span id="stt-equip-E-value"></span>@{[input('sttAddE','number','calcStt')]}</dl>
           <dl class="box" id="stt-add-F"><dt>増強<dd><span id="stt-equip-F-value"></span>@{[input('sttAddF','number','calcStt')]}</dl>
-          
+
           <dl class="box" id="stt-bonus-dex"><dt><span>器用度</span><dd id="stt-bonus-dex-value">$pc{bonusDex}</dl>
           <dl class="box" id="stt-bonus-agi"><dt><span>敏捷度</span><dd id="stt-bonus-agi-value">$pc{bonusAgi}</dl>
           <dl class="box" id="stt-bonus-str"><dt><span>筋力  </span><dd id="stt-bonus-str-value">$pc{bonusStr}</dl>
           <dl class="box" id="stt-bonus-vit"><dt><span>生命力</span><dd id="stt-bonus-vit-value">$pc{bonusVit}</dl>
           <dl class="box" id="stt-bonus-int"><dt><span>知力  </span><dd id="stt-bonus-int-value">$pc{bonusInt}</dl>
           <dl class="box" id="stt-bonus-mnd"><dt><span>精神力</span><dd id="stt-bonus-mnd-value">$pc{bonusMnd}</dl>
-          
+
           <dl class="box" id="stt-pointbuy-TPS">
             <dt>割振りPt.
             <dd id="stt-pointbuy-TPS-value">
@@ -436,7 +437,7 @@ print <<"HTML";
             <dd><span id="mp-base">$pc{mpBase}</span>+<span id="mp-auto-add">$pc{mpAutoAdd}</span>+@{[input('mpAdd','number','calcSubStt')]}=<b id="mp-total">$pc{mpTotal}</b>
           </dl>
         </div>
-        
+
         <dl class="box" id="level">
           <dt>冒険者レベル<dd id="level-value">$pc{level}
         </dl>
@@ -444,7 +445,7 @@ print <<"HTML";
           <dt>経験点<dd><div><span id="exp-rest">$pc{expRest}</span><br>／<br><span id="exp-total">$pc{expTotal}</span></div>
         </dl>
       </div>
-      
+
       <div id="area-ability">
         <div id="area-classes" class="in-toc" data-content-title="技能">
           <div class="box" id="classes">
@@ -673,7 +674,7 @@ HTML
         $hit = 1;
       }
       $item .= ' value="'.@$data[1].'">'.@$data[1];
-      
+
       if(@$data[2] =~ /^(.*?)専用/){ $only{@$data[2]} .= $item; }
       else { print $item; }
     }
@@ -931,7 +932,7 @@ print <<"HTML";
           </table>
         </div>
       </div>
-      
+
       <div id="area-equipment">
         <div class="box" id="attack-classes">
           <table class="edit-table line-tbody">
@@ -1430,19 +1431,19 @@ print <<"HTML";
           <li>所持金欄、預金／借金欄に<code>自動</code>または<code>auto</code>と記入すると、収支の計算結果を反映します。
         </ul>
       </details>
-      
+
       <details class="box" id="free-note" @{[$pc{freeNote}?'open':'']}>
         <summary class="in-toc">容姿・経歴・その他メモ</summary>
         <textarea name="freeNote">$pc{freeNote}</textarea>
         @{[ $::in{log} ? '<button type="button" class="set-newest" onclick="setNewestSingleData(\'freeNote\')">最新のメモを適用する</button>' : '' ]}
       </details>
-      
+
       <details class="box" id="free-history" @{[$pc{freeHistory}?'open':'']}>
         <summary class="in-toc">履歴（自由記入）</summary>
         <textarea name="freeHistory">$pc{freeHistory}</textarea>
         @{[ $::in{log} ? '<button type="button" class="set-newest" onclick="setNewestSingleData(\'freeHistory\')">最新の履歴（自由記入）を適用する</button>' : '' ]}
       </details>
-      
+
       <div class="box" id="history">
         <h2 class="in-toc">セッション履歴</h2>
         @{[input 'historyNum','hidden']}
@@ -1486,7 +1487,7 @@ print <<"HTML";
                   <span class="honor-select-view"></span>
                   @{[input("history${num}Honor",'text','calcHonor')]}
                 </span>
-              
+
               <td class="grow  ">@{[input("history${num}Grow",'text','calcStt','list="list-grow"')]}
               <td class="gm    ">@{[input("history${num}Gm")]}
               <td class="member">@{[input("history${num}Member")]}
@@ -1558,11 +1559,11 @@ print <<"HTML";
         @{[ $::in{log} ? '<button type="button" class="set-newest" onclick="setNewestHistoryData()">最新のセッション履歴を適用する</button>' : '' ]}
       </div>
       </section>
-      
+
       @{[ chatPaletteForm ]}
-      
+
       @{[ colorCostomForm ]}
-      
+
       @{[ input 'birthTime','hidden' ]}
       <input type="hidden" name="id" value="$::in{id}">
     </form>

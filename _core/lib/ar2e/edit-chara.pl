@@ -29,7 +29,7 @@ foreach (sort{$data::class{$a}{sort} cmp $data::class{$b}{sort}} keys %data::cla
       push(@support_class, $_);
     }
   }
-  
+
 }
 @main_class = (
   'label=基本クラス',@main_class,
@@ -74,26 +74,26 @@ if($mode eq 'edit' || ($mode eq 'convert' && $pc{ver})){
 }
 elsif($mode eq 'blanksheet'){
   $pc{group} = $set::group_default;
-  
+
   $pc{history0Exp}   = $set::make_exp;
   $pc{history0Money} = $set::make_money;
   $pc{expTotal} = $pc{history0Exp};
-  
+
   $pc{level} = 1;
 
   $pc{moneyAuto} = 1;
-  
+
   $pc{rollStrDice} = $pc{rollDexDice} = $pc{rollAgiDice} =
   $pc{rollIntDice} = $pc{rollSenDice} = $pc{rollMndDice} = $pc{rollLukDice} =
   $pc{battleDiceAcc} = $pc{battleDiceAtk} = $pc{battleDiceEva} =
-  $pc{rollTrapDetectDice} = $pc{rollTrapReleaseDice} = $pc{rollDangerDetectDice} = $pc{rollEnemyLoreDice} = 
+  $pc{rollTrapDetectDice} = $pc{rollTrapReleaseDice} = $pc{rollDangerDetectDice} = $pc{rollEnemyLoreDice} =
   $pc{rollAppraisalDice} = $pc{rollMagicDice} = $pc{rollSongDice} = $pc{rollAlchemyDice} = 2;
   $pc{fate} = 5;
 
   $pc{skill1Type} = 'race';
   $pc{skill3Type} = 'general';
   $pc{skill4Type} = 'general';
-  
+
   $pc{paletteUseBuff} = 1;
 
   %pc = applyCustomizedInitialValues(\%pc);
@@ -156,6 +156,7 @@ Content-type: text/html\n
   <meta charset="UTF-8">
   <title>@{[$mode eq 'edit'?"編集：$titlebarname" : '新規作成']} - $set::title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" media="all" href="${main::core_dir}/skin/_common/favicon.ico">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/base.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/sheet.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/ar2e/css/chara.css?${main::ver}">
@@ -191,7 +192,7 @@ if($mode_make){
 }
 print <<"HTML";
       <input type="hidden" name="mode" value="@{[ $mode eq 'edit' ? 'save' : 'make' ]}">
-      
+
       <div id="header-menu">
         <h2><span></span></h2>
         <ul>
@@ -213,7 +214,7 @@ print <<"HTML";
       </div>
 
       <aside class="message">$message</aside>
-      
+
       <section id="section-common">
 HTML
 if($set::user_reqd){
@@ -281,7 +282,7 @@ print <<"HTML";
           <dd>@{[ input 'tags','','','' ]}
         </dl>
       </div>
-      
+
       <div class="box in-toc" id="name-form" data-content-title="キャラクター名・プレイヤー名">
         <div>
           <dl id="character-name">
@@ -302,7 +303,7 @@ print <<"HTML";
           <dd>@{[input('playerName')]}
         </dl>
       </div>
-      
+
       <details class="box" id="regulation" @{[$mode eq 'edit' ? '':'open']}>
         <summary class="in-toc">作成レギュレーション</summary>
         <dl>
@@ -425,7 +426,7 @@ print <<"HTML";
             <dd id="class-title-value">$pc{classTitle}
           </dl>
         </div>
-        
+
         <div class="box in-toc" id="status" data-content-title="能力値">
           <table class="edit-table" id="status-main">
             <colgroup>
@@ -594,8 +595,8 @@ print <<"HTML";
           </table>
         </div>
       </div>
-      
-      
+
+
       <details class="box" id="levelup" open>
         <summary class="in-toc">レベルアップ</summary>
         <div>
@@ -714,7 +715,7 @@ foreach my $num ('TMPL',1 .. $pc{skillsNum}) {
 print <<"HTML";
             <tbody id="skill-row${num}">
               <tr>
-                <td rowspan="2" class="handle"> 
+                <td rowspan="2" class="handle">
                 <td>@{[input "skill${num}Name",'','','onchange="calcSkills()" placeholder="名称"']}
                 <td>@{[input "skill${num}Lv",'number','calcSkills','placeholder="Lv"']}
                 <td>@{[input "skill${num}Timing",'','','placeholder="タイミング" list="list-timing"']}
@@ -1182,19 +1183,19 @@ print <<"HTML";
           </div>
         </div>
       </div>
-      
+
       <details class="box" id="free-note" @{[$pc{freeNote}?'open':'']}>
         <summary class="in-toc">容姿・経歴・その他メモ</summary>
         <textarea name="freeNote">$pc{freeNote}</textarea>
         @{[ $::in{log} ? '<button type="button" class="set-newest" onclick="setNewestSingleData(\'freeNote\')">最新のメモを適用する</button>' : '' ]}
       </details>
-      
+
       <details class="box" id="free-history" @{[$pc{freeHistory}?'open':'']}>
         <summary class="in-toc">履歴（自由記入）</summary>
         <textarea name="freeHistory">$pc{freeHistory}</textarea>
         @{[ $::in{log} ? '<button type="button" class="set-newest" onclick="setNewestSingleData(\'freeHistory\')">最新の履歴（自由記入）を適用する</button>' : '' ]}
       </details>
-      
+
       <div class="box" id="history">
         <h2 class="in-toc">セッション履歴</h2>
         @{[input 'historyNum','hidden']}
@@ -1291,10 +1292,10 @@ print <<"HTML";
         </ul>
         @{[ $::in{log} ? '<button type="button" class="set-newest" onclick="setNewestHistoryData()">最新のセッション履歴を適用する</button>' : '' ]}
       </div>
-      
+
       <div class="box" id="exp-footer">
         <p>
-        成長点[<b id="exp-total"></b>] - 
+        成長点[<b id="exp-total"></b>] -
         ( ＣＬ[<b id="exp-used-level"></b>]
         + 一般スキル[<b id="exp-used-skill"></b>]
         + 誓約[<b id="exp-used-geises"></b>]
@@ -1307,11 +1308,11 @@ print <<"HTML";
         </p>
       </div>
       </section>
-      
+
       @{[ chatPaletteForm ]}
-      
+
       @{[ colorCostomForm ]}
-      
+
       @{[ input 'birthTime','hidden' ]}
       <input type="hidden" name="id" value="$::in{id}">
     </form>
