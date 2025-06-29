@@ -7,7 +7,6 @@ use List::Util qw/max min/;
 use Fcntl;
 
 ### サブルーチン-SW ##################################################################################
-
 ### ユニットステータス出力 --------------------------------------------------
 sub createUnitStatus {
   my %pc = %{$_[0]};
@@ -16,7 +15,9 @@ sub createUnitStatus {
   if ($pc{type} eq 'm'){
     my @n2a = ('','A' .. 'Z');
     if($pc{statusNum} > 1){ # 2部位以上
-      my @hp; my @mp; my @def;
+      my @hp;
+      my @mp;
+      my @def_parts; # ★ここ: @def_parts をここで宣言
       my %multiple;
       foreach my $i (1 .. $pc{statusNum}){
         ($pc{"part${i}"} = $pc{"status${i}Style"}) =~ s/^.+[(（)](.+?)[)）]$/$1/;
@@ -24,7 +25,7 @@ sub createUnitStatus {
       }
       my %count;
       foreach my $i (1 .. $pc{statusNum}){
-        my $partname = $pc{"part${i}"};
+        my $partname = $pc{"part${i}"}; # ★ここ: $partname はこのスコープで適切
         if($pc{mount}){
           if($pc{lv}){
             my $ii = ($pc{lv} - $pc{lvMin} +1);
@@ -40,16 +41,12 @@ sub createUnitStatus {
         my $def = s_eval($pc{"status${i}Defense"});
         push(@hp , {$partname.':HP' => "$hp/$hp"});
         push(@mp , {$partname.':MP' => "$mp/$mp"}) unless isEmptyValue($mp);
-        push(@def, $partname.$def);
+        push(@def_parts, {$partname.':防護' => "$def/$def"});
       }
       @unitStatus = ();
       push(@unitStatus, @hp);
       push(@unitStatus, @mp) if $#mp >= 0;
-      if ($target eq 'udonarium') {
-        push(@unitStatus, {'防護' => join('／',@def)});
-      } else {
-        push(@unitStatus, {'メモ' => '防護:'.join('／',@def)});
-      }
+      push(@unitStatus, @def_parts);
     }
     else { # 1部位
       my $i = 1;
@@ -64,14 +61,35 @@ sub createUnitStatus {
       my $def = s_eval($pc{"status${i}Defense"});
       push(@unitStatus, { 'HP' => "$hp/$hp" });
       push(@unitStatus, { 'MP' => "$mp/$mp" }) unless isEmptyValue($mp);
-      push(@unitStatus, { '防護' => "$def" });
+      push(@unitStatus, {'防護' => "$def/$def"});
     }
+
+    # モンスター（PC以外）の場合のみ、固定の修正項目を追加
+    push(@unitStatus, {'生命抵抗修正' => '0/0'});
+    push(@unitStatus, {'精神抵抗修正' => '0/0'});
+    push(@unitStatus, {'回避修正' => '0/0'});
+    push(@unitStatus, {'命中修正' => '0/0'});
+    push(@unitStatus, {'打撃修正' => '0/0'});
+    push(@unitStatus, {'行使修正' => '0/0'});
   }
-  else {
+  else { # PCの場合
     @unitStatus = (
       { 'HP' => $pc{hpTotal}.'/'.$pc{hpTotal} },
       { 'MP' => $pc{mpTotal}.'/'.$pc{mpTotal} },
-      { '防護' => $pc{defenseTotal1Def} },
+      { '防護' => $pc{defenseTotal1Def}.'/'.$pc{defenseTotal1Def} },
+      { '魔力修正' => '0/0' },
+      { '行使修正' => '0/0' },
+      { '魔法C' => '10' },
+      { '魔法D修正' => '0/0' },
+      { '回復量修正' => '0/0' },
+      { '命中修正' => '0/0' },
+      { 'C修正' => '0/0' },
+      { '追加D修正' => '0/0' },
+      { '必殺効果' => '0/0' },
+      { 'クリレイ' => '0/0' },
+      { '生命抵抗修正' => '0/0' },
+      { '精神抵抗修正' => '0/0' },
+      { '回避修正' => '0/0' },
     );
 
     if (!$::SW2_0) {
