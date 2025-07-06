@@ -72,25 +72,25 @@ sub createUnitStatus {
     push(@unitStatus, {'打撃修正' => '0/0'});
     push(@unitStatus, {'行使修正' => '0/0'});
   }
-  else { # PCの場合
-    @unitStatus = (
-      { 'HP' => $pc{hpTotal}.'/'.$pc{hpTotal} },
-      { 'MP' => $pc{mpTotal}.'/'.$pc{mpTotal} },
-      { '防護' => $pc{defenseTotal1Def}.'/'.$pc{defenseTotal1Def} },
-      { '魔力修正' => '0/0' },
-      { '行使修正' => '0/0' },
-      { '魔法C' => '10' },
-      { '魔法D修正' => '0/0' },
-      { '回復量修正' => '0/0' },
-      { '命中修正' => '0/0' },
-      { 'C修正' => '0/0' },
-      { '追加D修正' => '0/0' },
-      { '必殺効果' => '0/0' },
-      { 'クリレイ' => '0/0' },
-      { '生命抵抗修正' => '0/0' },
-      { '精神抵抗修正' => '0/0' },
-      { '回避修正' => '0/0' },
-    );
+else { # PCの場合
+    # 基本ステータス
+    push(@unitStatus, { 'HP' => $pc{hpTotal}.'/'.$pc{hpTotal} });
+    push(@unitStatus, { 'MP' => $pc{mpTotal}.'/'.$pc{mpTotal} });
+    push(@unitStatus, { '防護' => $pc{defenseTotal1Def}.'/'.$pc{defenseTotal1Def} });
+    push(@unitStatus, { '魔法防護' => '0/0' });
+    push(@unitStatus, { '魔力修正' => '0/0' });
+    push(@unitStatus, { '行使修正' => '0/0' });
+    push(@unitStatus, { '魔法C' => '10' });
+    push(@unitStatus, { '魔法D修正' => '0/0' });
+    push(@unitStatus, { '回復量修正' => '0/0' });
+    push(@unitStatus, { '命中修正' => '0/0' });
+    push(@unitStatus, { 'C修正' => '0/0' });
+    push(@unitStatus, { '追加D修正' => '0/0' });
+    push(@unitStatus, { '必殺効果' => '0/0' });
+    push(@unitStatus, { 'クリレイ' => '0/0' });
+    push(@unitStatus, { '生命抵抗修正' => '0/0' });
+    push(@unitStatus, { '精神抵抗修正' => '0/0' });
+    push(@unitStatus, { '回避修正' => '0/0' });
 
     if (!$::SW2_0) {
       if ($pc{lvBar}) {
