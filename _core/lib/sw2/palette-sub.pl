@@ -529,7 +529,7 @@ sub palettePreset {
             $text .= "$::pc{'paletteAttack'.$paNum.'Crit'}";
             $text .= ")" if $bot{BCD};
             $text .= "\]+";
-            $text .= $::pc{paletteUseVar} ? "{追加D$_}" : $::pc{"weapon${_}DmgTotal"};
+            $text .= $::pc{paletteUseVar} ? $::pc{"weapon${_}DmgTotal"}  : "{追加D$_}";
             $text .= "+{ガン追加D修正}";
             $text .= "$::pc{'paletteAttack'.$paNum.'Dmg'}";
             $text .= " ダメージ";
@@ -541,7 +541,7 @@ sub palettePreset {
             $text .= "k$bullet->{p}\[";
             $text .= "13";
             $text .= "\]+";
-            $text .= $::pc{paletteUseVar} ? "{追加D$_}" : $::pc{"weapon${_}DmgTotal"};
+            $text .= $::pc{paletteUseVar} ? $::pc{"weapon${_}DmgTotal"} : "{追加D$_}";
             $text .= "+{回復量修正}";
             $text .= " 回復量";
             $text .= "\n";
@@ -553,7 +553,7 @@ sub palettePreset {
           $text .= "$::pc{'weapon'.$_.'Crit'}+{C修正}$activeCrit";
           $text .= ")" if $bot{BCD};
           $text .= "\]+";
-          $text .= $::pc{paletteUseVar} ? "{追加D$_}" : $::pc{"weapon${_}DmgTotal"};
+          $text .= $::pc{paletteUseVar} ?  $::pc{"weapon${_}DmgTotal"} : "{追加D$_}" ;
           $text .= $activeDmg;
           
           $text .= "+{追加D修正}";
@@ -584,7 +584,7 @@ sub palettePreset {
         my $activeName = $::pc{'paletteAttack'.$paNum.'Name'} ? "＋$::pc{'paletteAttack'.$paNum.'Name'}" : '';
 
         $text .= "2d+";
-        $text .= $::pc{paletteUseVar} ? "{命中$_}" : $::pc{"weapon${_}AccTotal"};
+        $text .= $::pc{paletteUseVar} ? $::pc{"weapon${_}AccTotal"} : "{命中$_}";
         $text .= "+{命中修正}";
         if($::pc{'paletteAttack'.$paNum.'Acc'}){
           $text .= optimizeOperatorFirst "+$::pc{'paletteAttack'.$paNum.'Acc'}";
@@ -625,7 +625,7 @@ sub palettePreset {
       next if !$hasChecked && !$::pc{"evasionClass${i}"};
 
       $text .= "2d+";
-      $text .= $::pc{paletteUseVar} ? "{回避${i}}" : $::pc{"defenseTotal${i}Eva"};
+      $text .= $::pc{paletteUseVar} ? $::pc{"defenseTotal${i}Eva"} : "{回避${i}}";
       $text .= "+{回避修正} 回避力".($::pc{"defenseTotal${i}Note"}?"／$::pc{'defenseTotal'.$i.'Note'}":'')."\n";
     }
     $text .= appendPaletteInsert('defense');

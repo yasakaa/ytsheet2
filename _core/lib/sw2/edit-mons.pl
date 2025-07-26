@@ -16,6 +16,11 @@ require $set::data_mons;
 my ($data, $mode, $file, $message) = getSheetData($::in{mode});
 our %pc = %{ $data };
 
+# paletteTool の値を強制的に 'bcdice' に正規化する
+if (!defined $pc{paletteTool} || $pc{paletteTool} eq '' || $pc{paletteTool} eq 'ytc') {
+    $pc{paletteTool} = 'bcdice';
+}
+
 my $mode_make = ($mode =~ /^(blanksheet|copy|convert)$/) ? 1 : 0;
 
 ### 出力準備 #########################################################################################
@@ -79,6 +84,7 @@ Content-type: text/html\n
   <meta charset="UTF-8">
   <title>$title - $set::title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" media="all" href="${main::core_dir}/skin/_common/favicon.ico">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/base.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/sheet.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/sw2/css/monster.css?${main::ver}">
@@ -105,7 +111,7 @@ if($mode_make){
 }
 print <<"HTML";
       <input type="hidden" name="mode" value="@{[ $mode eq 'edit' ? 'save' : 'make' ]}">
-      
+
       <div id="header-menu">
         <h2><span></span></h2>
         <ul>
@@ -127,7 +133,7 @@ print <<"HTML";
       </div>
 
       <aside class="message">$message</aside>
-      
+
       <section id="section-common">
 HTML
 if($set::user_reqd){
@@ -411,11 +417,11 @@ print <<"HTML";
         <textarea name="description">$pc{description}</textarea>
       </div>
       </section>
-      
+
       @{[ chatPaletteForm ]}
-      
+
       @{[ colorCostomForm ]}
-    
+
       @{[ input 'birthTime','hidden' ]}
       @{[ input 'id','hidden' ]}
     </form>

@@ -116,6 +116,7 @@ Content-type: text/html\n
   <meta charset="UTF-8">
   <title>@{[$mode eq 'edit'?"編集：$pc{artsName}":'新規作成']} - $set::title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" media="all" href="${main::core_dir}/skin/_common/favicon.ico">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/base.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/_common/css/sheet.css?${main::ver}">
   <link rel="stylesheet" media="all" href="${main::core_dir}/skin/sw2/css/arts.css?${main::ver}">
@@ -148,7 +149,7 @@ if($mode_make){
 }
 print <<"HTML";
       <input type="hidden" name="mode" value="@{[ $mode eq 'edit' ? 'save' : 'make' ]}">
-            
+
       <div id="header-menu">
         <h2><span></span></h2>
         <ul class="menu-items">
@@ -169,7 +170,7 @@ print <<"HTML";
       </div>
 
       <aside class="message">$message</aside>
-      
+
       <section id="section-common">
 HTML
 if($set::user_reqd){
@@ -268,7 +269,7 @@ HTML
           <dl class="element  "><dt>属性        <dd>@{[ input 'magicElement','','','list="list-element"' ]}</dl>
           <dl class="summary  "><dt>概要        <dd>@{[ input 'magicSummary' ]}</dl>
           <dl class="effect   "><dt>効果        <dd><textarea name="magicEffect">$pc{magicEffect}</textarea></dl>
-          
+
         </div>
         <div class="box">
           <h2 class="in-toc">由来・逸話など</h2>
@@ -426,9 +427,9 @@ print <<"HTML";
         </details>
       </div>
     </section>
-      
+
       @{[ colorCostomForm ]}
-    
+
       @{[ input 'birthTime','hidden' ]}
       <input type="hidden" name="id" value="$::in{id}">
     </form>

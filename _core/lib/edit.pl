@@ -69,6 +69,7 @@ if(!$LOGIN_ID && $mode =~ /^(?:blanksheet|copy|convert)$/){
 ### 各ゲームシステム処理 --------------------------------------------------
 require $set::lib_edit_char;
 
+
 ### 共通サブルーチン --------------------------------------------------
 ## データ読み込み
 sub getSheetData {
@@ -93,7 +94,7 @@ sub getSheetData {
     }
     close($IN);
     if($datatype eq 'logs' && !$hit){ error("過去ログ（$::in{log}）が見つかりません。"); }
-    
+
     if($::in{log}){
       ($pc{protect}, $pc{forbidden}) = getProtectType("${sheetDir}/data.cgi");
       $message = $pc{updateTime}.' 時点のバックアップデータから編集しています。';
@@ -116,13 +117,13 @@ sub getSheetData {
     }
     close($IN);
     if($datatype eq 'logs' && !$hit){ error("過去ログ（$::in{log}）が見つかりません。"); }
-    
+
     if($pc{forbidden}){
       if($::in{log}){
         ($pc{protect}, $pc{forbidden}) = getProtectType("${sheetDir}/data.cgi");
       }
       unless(
-        ($pc{protect} eq 'none') || 
+        ($pc{protect} eq 'none') ||
         ($author && ($author eq $LOGIN_ID || $set::masterid eq $LOGIN_ID))
       ){
         error("閲覧・編集権限がありません。");
@@ -166,9 +167,10 @@ sub tokenMake {
   sysopen (my $FH, $set::tokenfile, O_WRONLY | O_APPEND | O_CREAT, 0666);
   print $FH $token."<>".(time + 60*60*24*7)."<>\n";
   close($FH);
-  
+
   return $token;
 }
+
 
 ## カスタマイズされた初期値の反映
 sub applyCustomizedInitialValues {
@@ -317,7 +319,7 @@ sub selectInput {
   my $func = shift;
   if($func && $func !~ /\(.*?\)$/){ $func .= '()'; }
   my $text = '<div class="select-input"><select name="'.$name.'" oninput="selectInputCheck(this);'.$func.'">'.option($name, @_);
-  $text .= '<option value="free">その他（自由記入）'; 
+  $text .= '<option value="free">その他（自由記入）';
   my $hit = 0;
   foreach my $i (@_) {
     my $value = $i;
@@ -349,7 +351,7 @@ sub imageForm {
       </p>
     </div>
     @{[ input('imageUpdate', 'hidden') ]}
-    
+
     <div id="image-custom" style="display:none">
       <div class="image-custom-view-area">
         <div id="image-custom-frame-S1" class="image-custom-frame"><div class="image-custom-view"><b>横幅が狭い時</b></div></div>
@@ -399,7 +401,7 @@ sub imageForm {
             imageDragPointSet();
             imagePosition();
           });
-          
+
           // ドラッグで位置調整
           let imgURL = "${imgurl}";
           let pointWidth  = 1;
@@ -463,7 +465,6 @@ sub chatPaletteForm {
   my $palette;
   my %opt = (
     tool => [
-      '=>ゆとチャadv.',
       'tekey=>Tekey',
       'bcdice=>その他(BCDice使用)',
     ],
@@ -471,7 +472,7 @@ sub chatPaletteForm {
     @_,
   );
   $palette .= "$_\n" foreach(paletteProperties('',$::in{type}));
-  
+
   $::pc{unitStatusNum} ||= 3;
   my $status;
   foreach ('TMPL',1..$::pc{unitStatusNum}) {
@@ -481,7 +482,7 @@ sub chatPaletteForm {
     $status .= '<td>'.input("unitStatus${_}Value",'','','placeholder="値"');
     $status = '<template id="unit-status-template">'.$status.'</template>' if $_ eq 'TMPL';
   }
-  
+
   return <<"HTML";
     <section id="section-palette" style="display:none;">
       <div class="box" id="unit-setting">
@@ -530,22 +531,22 @@ sub chatPaletteForm {
             </select>
           </p>
           <textarea name="chatPalette" style="height:20em" placeholder="例）&#13;&#10;2d6+{冒険者}+{器用}&#13;&#10;&#13;&#10;※入力がない場合、プリセットが自動的に反映されます。">$::pc{chatPalette}</textarea>
-          
+
           <div class="palette-column">
           <h2>デフォルト変数 （自動的に末尾に出力されます）</h2>
           <textarea id="paletteDefaultProperties" readonly style="height:20em">$palette</textarea>
             <p>
-              @{[ checkbox 'chatPalettePropertiesAll','全てのデフォルト変数を出力する','setChatPalette' ]} <br>
-              <small>※デフォルトだと、未使用の変数は出力されません</small>
+              @{[ checkbox 'chatPalettePropertiesAll','全てのデフォルト変数を出力しない','setChatPalette' ]} <br>
+              <small>※デフォルトだと、未使用の変数ごと出力します</small>
             </p>
           </div>
           <div class="palette-column">
             <h2>プリセット （見本またはコピーペースト用）</h2>
             <textarea id="palettePreset" readonly style="height:20em"></textarea>
             <p>
-              @{[ checkbox 'paletteUseVar','デフォルト変数を使う','setChatPalette' ]}
+              @{[ checkbox 'paletteUseVar','デフォルト変数を使わない※非推奨','setChatPalette' ]}
               @{[ $opt{buff} ? checkbox('paletteUseBuff','バフデバフ用変数を使う','setChatPalette') : '' ]}<br>
-              @{[ checkbox 'paletteRemoveTags','ルビなどテキスト装飾の構文を取り除く','setChatPalette' ]} 
+              @{[ checkbox 'paletteRemoveTags','ルビなどテキスト装飾の構文を取り除く','setChatPalette' ]}
             </p>
             <dl>
               <dt>使用するオンセツール
