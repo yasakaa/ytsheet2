@@ -60,9 +60,10 @@ sub createUnitStatus {
       }
       my $hp = convertStt($pc{"status${i}Hp"});
       my $mp = convertStt($pc{"status${i}Mp"});
+      my $def = convertStt($pc{"status${i}Defense"});
       push(@unitStatus, { 'HP' => $hp });
       push(@unitStatus, { 'MP' => $mp }) unless isEmptyValue($mp);
-      push(@unitStatus, { '防護' => $pc{"status${i}Defense"} });
+      push(@unitStatus, { '防護' => $def });
     }
     
     if($pc{weakness} && $pc{weakness} ne 'なし'){
@@ -77,22 +78,23 @@ sub createUnitStatus {
   else {
     @unitStatus = (
       { 'HP'         => $pc{hpTotal}.'/'.$pc{hpTotal} },
-  { 'MP'         => $pc{mpTotal}.'/'.$pc{mpTotal} },
-  { '防護'       => $pc{defenseTotal1Def}.'/'.$pc{defenseTotal1Def} }, 
-  { '魔法防護'   => '0/0' },
-  { '魔力修正'   => '0/0' },
-  { '行使修正'   => '0/0' },
-  { '魔法C'      => '10' },
-  { '魔法D修正'  => '0/0' },
-  { '回復量修正' => '0/0' },
-  { '命中修正'   => '0/0' },
-  { 'C修正'      => '0/0' },
-  { '追加D修正'  => '0/0' },
-  { '必殺効果'   => '0/0' },
-  { 'クリレイ'   => '0/0' },
-  { '生命抵抗修正' => '0/0' },
-  { '精神抵抗修正' => '0/0' },
-  { '回避修正'   => '0/0' },    );
+      { 'MP'         => $pc{mpTotal}.'/'.$pc{mpTotal} },
+      { '防護'       => $pc{defenseTotal1Def}.'/'.$pc{defenseTotal1Def} }, 
+      { '魔法防護'   => '0/0' },
+      { '魔力修正'   => '0/0' },
+      { '行使修正'   => '0/0' },
+      { '魔法C'      => '10' },
+      { '魔法D修正'  => '0/0' },
+      { '回復量修正' => '0/0' },
+      { '命中修正'   => '0/0' },
+      { 'C修正'      => '0/0' },
+      { '追加D修正'  => '0/0' },
+      { '必殺効果'   => '0/0' },
+      { 'クリレイ'   => '0/0' },
+      { '生命抵抗修正' => '0/0' },
+      { '精神抵抗修正' => '0/0' },
+      { '回避修正'   => '0/0' },    
+    );
 
     if (!$::SW2_0) {
       if ($pc{lvBar}) {
