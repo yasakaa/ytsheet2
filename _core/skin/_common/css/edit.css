@@ -656,26 +656,26 @@
     text-align: center;
   }
   input[type='button'] {
-    background: linear-gradient(to bottom, #e0e7ef, #c0c7cf);
+    background: linear-gradient(to bottom, #efe0e0, #cfc0c0);
     box-shadow:
       1px 1px 0 0 #ffffff inset,
       -1px -1px 0 0 #bbbbdd inset;
     .night & {
       color: #fff;
-      background: linear-gradient(to bottom, #50575f, #30373f);
+      background: linear-gradient(to bottom, #5f5050, #3f3030);
       box-shadow:
         1px 1px 0 0 #777788 inset,
         -1px -1px 0 0 #000000 inset;
     }
   }
   input[type='submit'] {
-    background: linear-gradient(to bottom, #ddeeff, #ccccff);
+    background: linear-gradient(to bottom, #ffdddd, #ffcccc);
     box-shadow:
       1px 1px 0 0 #ffffff inset,
       -1px -1px 0 0 #bbbbee inset;
     .night & {
       color: #fff;
-      background: linear-gradient(to bottom, #445566, #333355);
+      background: linear-gradient(to bottom, #664444, #553333);
       box-shadow:
         1px 1px 0 0 #777788 inset,
         -1px -1px 0 0 #000000 inset;

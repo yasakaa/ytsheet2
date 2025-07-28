@@ -148,7 +148,7 @@
         );
       }
       .night &:link {
-        color: hsl(var(--box-head-bg-color-h, 210), 100%, 80%);
+        color: hsl(var(--box-head-bg-color-h, 0), 100%, 80%);
       }
       .night &:visited {
         color: hsl(var(--box-base-bg-color-h, 0), 40%, 75%);

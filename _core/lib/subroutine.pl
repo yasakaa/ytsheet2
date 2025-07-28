@@ -757,10 +757,10 @@ sub rgb_to_hsl {
 ### デフォルトカラー --------------------------------------------------
 sub setDefaultColors {
   my $type = shift;
-  $::pc{$type.'colorHeadBgH'} //= 225;
+  $::pc{$type.'colorHeadBgH'} //=   0;
   $::pc{$type.'colorHeadBgS'} //=   9;
   $::pc{$type.'colorHeadBgL'} //=  65;
-  $::pc{$type.'colorBaseBgH'} //= 235;
+  $::pc{$type.'colorBaseBgH'} //=   0;
   $::pc{$type.'colorBaseBgS'} //=   0;
 }
 

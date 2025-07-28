@@ -580,7 +580,7 @@ function setDefaultColor(){
   form.colorHeadBgH.value =   0;
   form.colorHeadBgS.value =   9;
   form.colorHeadBgL.value =  65;
-  form.colorHeadBgH.value =   0;
+  form.colorBaseBgH.value =   0;
   form.colorBaseBgS.value =   0;
   changeColor();
 }
