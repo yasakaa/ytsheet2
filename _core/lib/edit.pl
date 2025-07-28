@@ -546,7 +546,6 @@ sub chatPaletteForm {
             <h2>プリセット （見本またはコピーペースト用）</h2>
             <textarea id="palettePreset" readonly style="height:20em"></textarea>
             <p>
-              @{[ checkbox 'paletteUseVar','デフォルト変数を使わない※非推奨','setChatPalette' ]}
               @{[ $opt{buff} ? checkbox('paletteUseBuff','バフデバフ用変数を使う','setChatPalette') : '' ]}<br>
               @{[ checkbox 'paletteRemoveTags','ルビなどテキスト装飾の構文を取り除く','setChatPalette' ]}
             </p>
