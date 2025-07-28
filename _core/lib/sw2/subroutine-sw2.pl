@@ -7,7 +7,6 @@ use List::Util qw/max min/;
 use Fcntl;
 
 ### サブルーチン-SW ##################################################################################
-
 ### ユニットステータス出力 --------------------------------------------------
 sub createUnitStatus {
   my %pc = %{$_[0]};
@@ -17,7 +16,9 @@ sub createUnitStatus {
   if ($pc{type} eq 'm'){
     my @n2a = ('','A' .. 'Z');
     if($pc{statusNum} > 1){ # 2部位以上
-      my @hp; my @mp; my @def;
+      my @hp;
+      my @mp;
+      my @def_parts; # 複数部位に対応
       my %multiple;
       foreach my $i (1 .. $pc{statusNum}){
         ($pc{"part${i}"} = $pc{"status${i}Style"}) =~ s/^.+[(（)](.+?)[)）]$/$1/;
@@ -25,7 +26,7 @@ sub createUnitStatus {
       }
       my %count;
       foreach my $i (1 .. $pc{statusNum}){
-        my $partname = $pc{"part${i}"};
+        my $partname = $pc{"part${i}"}; 
         if($pc{mount}){
           if($pc{lv}){
             my $ii = ($pc{lv} - $pc{lvMin} +1);
@@ -38,17 +39,19 @@ sub createUnitStatus {
         }
         my $hp  = convertStt($pc{"status${i}Hp"});
         my $mp  = convertStt($pc{"status${i}Mp"});
-        push(@hp , {$partname.':HP' => $hp});
-        push(@mp , {$partname.':MP' => $mp}) unless isEmptyValue($mp);
-        push(@def, $partname.$pc{"status${i}Defense"});
+        my $def = convertStt($pc{"status${i}Defense"});
+        push(@hp , {$partname.':HP' => "$hp/$hp"});
+        push(@mp , {$partname.':MP' => "$mp/$mp"}) unless isEmptyValue($mp);
+        push(@def_parts, {$partname.':防護' => "$def/$def"});
       }
       @unitStatus = ();
       push(@unitStatus, @hp);
       push(@unitStatus, @mp) if $#mp >= 0;
+      push(@unitStatus, @def_parts);
       if ($target eq 'udonarium') {
         push(@unitStatus, {'防護' => join('／',@def)});
       } else {
-        push(@unitMemo, '防護:'.join('／',@def));
+        push(@unitStatus, {'メモ' => '防護:'.join('／',@def)});
       }
     }
     else { # 1部位
@@ -59,13 +62,13 @@ sub createUnitStatus {
           $i .= $ii > 1 ? "-$ii" : '';
         }
       }
-      my $hp = convertStt($pc{"status${i}Hp"});
-      my $mp = convertStt($pc{"status${i}Mp"});
-      push(@unitStatus, { 'HP' => $hp });
-      push(@unitStatus, { 'MP' => $mp }) unless isEmptyValue($mp);
-      push(@unitStatus, { '防護' => $pc{"status${i}Defense"} });
+      my $hp = s_eval($pc{"status${i}Hp"});
+      my $mp = s_eval($pc{"status${i}Mp"});
+      my $def = s_eval($pc{"status${i}Defense"});
+      push(@unitStatus, { 'HP' => "$hp/$hp" });
+      push(@unitStatus, { 'MP' => "$mp/$mp" }) unless isEmptyValue($mp);
+      push(@unitStatus, {'防護' => "$def/$def"});
     }
-    
     if($pc{weakness} && $pc{weakness} ne 'なし'){
       if ($target eq 'udonarium') {
         push(@unitStatus, { '弱点' => $pc{weakness} });
@@ -73,13 +76,26 @@ sub createUnitStatus {
       else {
         push(@unitMemo, '弱点:'.$pc{weakness});
       }
-    }
   }
-  else {
-    @unitStatus = (
-      { 'HP' => $pc{hpTotal}.'/'.$pc{hpTotal} },
-      { 'MP' => $pc{mpTotal}.'/'.$pc{mpTotal} },
-      { '防護' => $pc{defenseTotal1Def} },
+else { # PCの場合
+    # 基本ステータス
+    push(@unitStatus, { 'HP' => $pc{hpTotal}.'/'.$pc{hpTotal} });
+    push(@unitStatus, { 'MP' => $pc{mpTotal}.'/'.$pc{mpTotal} });
+    push(@unitStatus, { '防護' => $pc{defenseTotal1Def}.'/'.$pc{defenseTotal1Def} });
+    push(@unitStatus, { '魔法防護' => '0/0' });
+    push(@unitStatus, { '魔力修正' => '0/0' });
+    push(@unitStatus, { '行使修正' => '0/0' });
+    push(@unitStatus, { '魔法C' => '10' });
+    push(@unitStatus, { '魔法D修正' => '0/0' });
+    push(@unitStatus, { '回復量修正' => '0/0' });
+    push(@unitStatus, { '命中修正' => '0/0' });
+    push(@unitStatus, { 'C修正' => '0/0' });
+    push(@unitStatus, { '追加D修正' => '0/0' });
+    push(@unitStatus, { '必殺効果' => '0/0' });
+    push(@unitStatus, { 'クリレイ' => '0/0' });
+    push(@unitStatus, { '生命抵抗修正' => '0/0' });
+    push(@unitStatus, { '精神抵抗修正' => '0/0' });
+    push(@unitStatus, { '回避修正' => '0/0' });
     );
 
     if (!$::SW2_0) {

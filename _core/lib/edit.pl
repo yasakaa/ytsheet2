@@ -467,7 +467,6 @@ sub chatPaletteForm {
   my $palette;
   my %opt = (
     tool => [
-      '=>ゆとチャadv.',
       'tekey=>Tekey',
       'bcdice=>その他(BCDice使用)',
     ],
@@ -539,17 +538,17 @@ sub chatPaletteForm {
           <h2>デフォルト変数 （自動的に末尾に出力されます）</h2>
           <textarea id="paletteDefaultProperties" readonly style="height:20em">$palette</textarea>
             <p>
-              @{[ checkbox 'chatPalettePropertiesAll','全てのデフォルト変数を出力する','setChatPalette' ]} <br>
-              <small>※デフォルトだと、未使用の変数は出力されません</small>
+              @{[ checkbox 'chatPalettePropertiesAll','全てのデフォルト変数を出力しない','setChatPalette' ]} <br>
+              <small>※デフォルトだと、未使用の変数ごと出力します</small>
             </p>
           </div>
           <div class="palette-column">
             <h2>プリセット （見本またはコピーペースト用）</h2>
             <textarea id="palettePreset" readonly style="height:20em"></textarea>
             <p>
-              @{[ checkbox 'paletteUseVar','デフォルト変数を使う','setChatPalette' ]}
+              @{[ checkbox 'paletteUseVar','デフォルト変数を使わない※非推奨','setChatPalette' ]}
               @{[ $opt{buff} ? checkbox('paletteUseBuff','バフデバフ用変数を使う','setChatPalette') : '' ]}<br>
-              @{[ checkbox 'paletteRemoveTags','ルビなどテキスト装飾の構文を取り除く','setChatPalette' ]} 
+              @{[ checkbox 'paletteRemoveTags','ルビなどテキスト装飾の構文を取り除く','setChatPalette' ]}
             </p>
             <dl>
               <dt>使用するオンセツール

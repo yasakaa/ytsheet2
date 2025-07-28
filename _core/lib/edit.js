@@ -577,10 +577,10 @@ function changeColor(){
   colorSample.style.setProperty('--box-base-bg-color-d', 15+'%'        );
 }
 function setDefaultColor(){
-  form.colorHeadBgH.value = 225;
+  form.colorHeadBgH.value =   0;
   form.colorHeadBgS.value =   9;
   form.colorHeadBgL.value =  65;
-  form.colorBaseBgH.value = 235;
+  form.colorHeadBgH.value =   0;
   form.colorBaseBgS.value =   0;
   changeColor();
 }
