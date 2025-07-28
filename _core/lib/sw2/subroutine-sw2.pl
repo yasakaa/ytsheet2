@@ -48,11 +48,7 @@ sub createUnitStatus {
       push(@unitStatus, @hp);
       push(@unitStatus, @mp) if $#mp >= 0;
       push(@unitStatus, @def_parts);
-      if ($target eq 'udonarium') {
-        push(@unitStatus, {'防護' => join('／',@def)});
-      } else {
-        push(@unitStatus, {'メモ' => '防護:'.join('／',@def)});
-      }
+    
     }
     else { # 1部位
       my $i = 1;
@@ -625,5 +621,4 @@ sub isEmptyValue {
   my $value = shift;
   return defined($value) && $value ne '' && $value !~ /^[-ー－―]$/ ? 0 : 1;
 }
-
-1;
+;
