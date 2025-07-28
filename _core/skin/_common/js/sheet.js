@@ -46,25 +46,11 @@ function downloadListOn() {
   document.getElementById("downloadlist").classList.toggle('show');
 }
 let cpOpenFirst = 0;
-
-function chatPaletteSelect(tool) {
-  // 現在のツールがtekey以外の時、強制的に 'bcdice' に設定するロジックを追加
-  if (tool === "" || tool === undefined || tool === null || tool === "ytc") {
-    tool = "bcdice";
-  }
-
-  const url = "./?mode=palette&id=" + sheetId + "&tool=" + tool;
-  fetch(url)
-    .then((response) => {
-      return response.text();
-    })
-    .then((text) => {
-      document.getElementById("chatPaletteBox").value = text;
-    });
-  document.querySelectorAll(".chat-palette-menu a").forEach((elm) => {
-    elm.classList.remove("check");
-  });
-  document.getElementById("cp-switch-" + tool).classList.add("check");
+function chatPaletteOn() {
+  document.querySelectorAll('.float-box:not(.chat-palette)').forEach(obj => { obj.classList.remove('show') });
+  document.querySelector(".chat-palette").classList.toggle('show');
+  if(!cpOpenFirst){ chatPaletteSelect(paletteTool); }
+  cpOpenFirst++;
 }
 function chatPaletteSelect(tool) {
   const url = './?mode=palette&id='+sheetId+'&tool='+tool;
