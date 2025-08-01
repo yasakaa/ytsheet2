@@ -20,6 +20,7 @@ sub createUnitStatus {
       my @hp;
       my @mp;
       my @def_parts; # 複数部位に対応
+      my @mdef_parts;
       my %multiple;
       foreach my $i (1 .. $pc{statusNum}){
         ($pc{"part${i}"} = $pc{"status${i}Style"}) =~ s/^.+[(（)](.+?)[)）]$/$1/;
@@ -44,11 +45,18 @@ sub createUnitStatus {
         push(@hp , {$partname.':HP' => "$hp"});
         push(@mp , {$partname.':MP' => "$mp"}) unless isEmptyValue($mp);
         push(@def_parts, {$partname.':防護' => "$def"});
+        push(@mdef_parts, {$partname.':魔法防護' => '0/0'});
       }
       @unitStatus = ();
       push(@unitStatus, @hp);
       push(@unitStatus, @mp) if $#mp >= 0;
       push(@unitStatus, @def_parts);
+      push(@unitStatus, @mdef_parts);
+      push(@unitStatus, { '生命抵抗修正' => '0/0' });
+      push(@unitStatus, { '精神抵抗修正' => '0/0' });
+      push(@unitStatus, { '回避修正'  => '0/0' });
+      push(@unitStatus, { '命中修正'  => '0/0' });
+      push(@unitStatus, { '打撃修正'  => '0/0' });
     }
     else { # 1部位
       my $i = 1;
@@ -64,6 +72,12 @@ sub createUnitStatus {
       push(@unitStatus, { 'HP' => $hp });
       push(@unitStatus, { 'MP' => $mp }) unless isEmptyValue($mp);
       push(@unitStatus, { '防護' => $def });
+      push(@unitStatus, { '魔法防護' => '0/0' });
+      push(@unitStatus, { '生命抵抗修正' => '0/0' });
+      push(@unitStatus, { '精神抵抗修正' => '0/0' });
+      push(@unitStatus, { '回避修正'  => '0/0' });
+      push(@unitStatus, { '命中修正'  => '0/0' });
+      push(@unitStatus, { '打撃修正'  => '0/0' });
     }
     
     if($pc{weakness} && $pc{weakness} ne 'なし'){
