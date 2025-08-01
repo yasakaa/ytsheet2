@@ -47,7 +47,7 @@ sub addJsonData {
     my $data1 = "知能:$pc{intellect}　知覚:$pc{perception}".($pc{mount}?'':"　反応:$pc{disposition}");
        $data1 .= "　穢れ:$pc{sin}" if $pc{sin};
     my $data2  = "言語:$pc{language}".($pc{mount}?'':"　生息地:$pc{habitat}");
-    my $data3  = ($pc{mount}?'':"先制値:$pc{initiative}　")."生命抵抗力:${vitresist}　精神抵抗力:${mndresist}";
+    my $data3  = ($pc{mount}?'':"先制値:$pc{initiative}")."　移動速度:$pc{mobility}　生命抵抗力:${vitresist}　精神抵抗力:${mndresist}";
     $pc{sheetDescriptionS} = $taxa."\n".$data3;
     $pc{sheetDescriptionM} = $taxa."　".$data1."\n".$data2."\n".$data3;
     
