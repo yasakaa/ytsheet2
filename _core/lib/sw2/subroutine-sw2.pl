@@ -57,6 +57,7 @@ sub createUnitStatus {
       push(@unitStatus, { '回避修正'  => '0/0' });
       push(@unitStatus, { '命中修正'  => '0/0' });
       push(@unitStatus, { '打撃修正'  => '0/0' });
+      push(@unitStatus, { '行使修正'  => '0/0' });
     }
     else { # 1部位
       my $i = 1;
@@ -78,6 +79,7 @@ sub createUnitStatus {
       push(@unitStatus, { '回避修正'  => '0/0' });
       push(@unitStatus, { '命中修正'  => '0/0' });
       push(@unitStatus, { '打撃修正'  => '0/0' });
+      push(@unitStatus, { '行使修正'  => '0/0' });
     }
     
     if($pc{weakness} && $pc{weakness} ne 'なし'){
